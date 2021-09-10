@@ -32,38 +32,41 @@
 
   if (isset($_POST["submit"])) {
 
-      
+      $num = $_POST['num'];
+      $message = $_POST['message'];
 
-  // Authorisation details.
-  $username = "your username";
-  $hash = "your api hash key";
 
-  // Config variables. Consult http://api.textlocal.in/docs for more info.
-  $test = "0";
+      $curl = curl_init();
 
-  // Data for text message. This is the text message data.
-  $sender = "TXTLCL"; // This is who the message appears to be from.
-  $numbers = $_POST["Code"] . $_POST["num"]; // A single number or a comma-seperated list of numbers
-  $message = $_POST["message"];
-  // 612 chars or less
-  // A single number or a comma-seperated list of numbers
-  $message = urlencode($message);
-  $data = "username=".$username."&hash=".$hash."&message=".$message."&sender=".$sender."&numbers=".$numbers."&test=".$test;
-  $ch = curl_init('http://api.textlocal.in/send/?');
-  curl_setopt($ch, CURLOPT_POST, true);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  $result = curl_exec($ch); // This is the result from the API
-  curl_close($ch);
+      curl_setopt_array($curl, [
+          CURLOPT_URL => "https://api.ikelvin.co/sms/send",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "{\n\t\"api_key\": \"709d65740b1ca881b60e077062810354\",\n\t\"source\": \"PayVerify\",\n\t\"destination\": \"$num\",\n\t\"message\": \"$message\",\n\t\"type\": \"2\",\n\t\"report\": \"1\"\n}",
+          CURLOPT_HTTPHEADER => [
+              "Authorization: Basic Og==",
+              "Content-Type: application/json"
+          ],
+      ]);
 
-  if (!$result) {
+      $response = curl_exec($curl);
+      $err = curl_error($curl);
+
+      curl_close($curl);
+
+  if ($err) {
+      echo "cURL Error #:" . $err;
     ?>
     <script>alert('message not sent!')</script>
   <?php
 }
 else{
   #print the final result
-  echo $result;
+    echo $response;
 ?>
 <script>alert('message sent!')</script>
 <?php
