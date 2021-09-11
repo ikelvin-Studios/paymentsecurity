@@ -20,9 +20,9 @@
 
     <div class="container">
       <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-        <h2>Checkout form</h2>
-        <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+<!--        <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">-->
+        <h2>Online Checkout form</h2>
+        <p class="lead">Below is an example online checkout form with built in validation and secure payment verification via OTP (One Time Pin)</p>
       </div>
 
       <div class="row">
@@ -218,10 +218,11 @@
                 </div>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="cc-phone">Associated Phone Number</label>
+                <label for="cc-phone">Phone Number</label>
                 <input type="text" class="form-control" id="cc-phone" placeholder="" required>
+                <small class="text-muted">Phone Number as known by bank</small>
                 <div class="invalid-feedback">
-                  Associated Phone Number
+                  Phone Number Required
                 </div>
               </div>
             </div>
